@@ -7,17 +7,18 @@
 <style>
 html,body{margin:0;padding:0;background:transparent;overflow:hidden}
 *{box-sizing:border-box}
-body{width:100%}
 .stage{position:relative;width:100%;max-width:1200px;margin:0 auto;line-height:0;overflow:hidden;aspect-ratio:1774/887}
-.stage>img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain;border:0}
-.screen{position:absolute;left:8.28636%;top:8.22999%;width:83.42728%;height:72.37881%;overflow:hidden;line-height:normal;background:#000}
-.screen iframe{position:absolute;left:0;top:-14.83645%;width:100%;height:129.67290%;border:0;display:block;background:#000}
+.stage>img{position:absolute;inset:0;width:100%;height:100%;display:block;border:0;object-fit:contain}
+/* area preta medida da nova TV: x=147..1626, y=73..714 em 1774x887 */
+.screen{position:absolute;left:8.28636%;top:8.22999%;width:83.42728%;height:72.37881%;overflow:hidden;background:#000;line-height:normal}
+/* player 16:9 usando toda a altura da tela, sem deformar; sobram apenas margens pretas laterais */
+.screen iframe{position:absolute;top:0;left:11.44144%;width:77.11712%;height:100%;border:0;display:block;background:#000}
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 </style>
 </head>
 <body>
 <div class="stage" aria-label="Televisão exibindo vídeo sobre Design e Sustentabilidade">
-  <img src="https://raw.githubusercontent.com/mediacaopedagogica/Projeto/main/tmp/tv-sustentabilidade/tv-sustentabilidade.png?v=2" alt="Televisão em ambiente com plantas, madeira e elementos relacionados à sustentabilidade.">
+  <img src="https://raw.githubusercontent.com/mediacaopedagogica/Projeto/main/tmp/tv-sustentabilidade/tv-sustentabilidade.png?v=3" alt="Televisão em ambiente com plantas e madeira.">
   <div class="screen">
     <iframe
       src="https://www.youtube.com/embed/W7-QKIz03dA?start=67&amp;rel=0&amp;playsinline=1"
@@ -27,7 +28,7 @@ body{width:100%}
       allowfullscreen>
     </iframe>
   </div>
-  <span class="sr-only">O vídeo inicia em 1 minuto e 7 segundos e é exibido dentro da tela da televisão.</span>
+  <span class="sr-only">O vídeo inicia em 1 minuto e 7 segundos e é exibido dentro da televisão sem deformação.</span>
 </div>
 </body>
 </html>
