@@ -5,32 +5,43 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Design de luxo — Fórum de Interação</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;background:transparent}body{display:flex;justify-content:center;align-items:flex-start}iframe{width:100%;max-width:520px;height:790px;border:0;display:block;background:transparent}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:#111}body{min-height:100vh;display:grid;place-items:center;background:linear-gradient(#efe8df,#ddd0be);padding:18px}.phone{width:min(390px,94vw);background:#fff;border:10px solid #111;border-radius:38px;box-shadow:0 28px 64px #0003;overflow:hidden;position:relative}.notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:152px;height:28px;background:#111;border-radius:0 0 20px 20px;z-index:20}.status{height:42px;display:flex;align-items:end;justify-content:space-between;padding:10px 18px 6px;font-size:13px;font-weight:700}.top{height:76px;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid #eee}.profile{display:flex;align-items:center;gap:10px;min-width:0}.ring{width:46px;height:46px;border-radius:50%;padding:2px;background:linear-gradient(135deg,#8c6a3f,#dfc7a4,#7a5c38);flex:0 0 auto}.avatar{width:100%;height:100%;border-radius:50%;overflow:hidden;background:#d9c9b3}.avatar img{width:100%;height:100%;object-fit:cover}.name strong{display:block;font-size:15px}.name span{display:block;font-size:12px;color:#666;margin-top:3px}.menu{font-size:24px}.wrap{position:relative;background:#f5f0e9}.carousel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none}.carousel::-webkit-scrollbar{display:none}.slide{min-width:100%;scroll-snap-align:start;aspect-ratio:4/5;overflow:hidden;background:#f4efe7}.slide img{width:100%;height:100%;object-fit:cover;display:block}.count{position:absolute;top:12px;right:12px;background:#0009;color:#fff;font-size:12px;font-weight:700;padding:6px 10px;border-radius:999px;z-index:6}.arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:6;width:38px;height:38px;border:0;border-radius:50%;background:#0006;color:#fff;font-size:22px;display:grid;place-items:center;cursor:pointer}.prev{left:10px}.next{right:10px}.article{position:absolute;right:12px;bottom:12px;z-index:7;width:58px;height:58px;background:transparent;border:0;padding:0;text-decoration:none}.article img{width:100%;height:100%;object-fit:cover;border-radius:50%;border:3px solid #fff;box-shadow:0 8px 18px #0004;background:#fff}.glass{position:absolute;right:1px;bottom:1px;width:18px;height:18px;border:2.5px solid #24384d;border-radius:50%;background:#ffffffe6}.glass:after{content:"";position:absolute;width:9px;height:3px;background:#24384d;border-radius:9px;right:-5px;bottom:-3px;transform:rotate(45deg)}.actions{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 8px}.actions div{display:flex;gap:14px}.icon{border:0;background:transparent;padding:0;font-size:24px;cursor:pointer;line-height:1}.liked{color:#d63b58}.feedback{padding:0 14px 8px;font-size:13px;font-weight:700;min-height:24px}.dots{display:flex;justify-content:center;gap:6px;padding:2px 0 12px}.dot{width:6px;height:6px;border-radius:99px;background:#d0d0d0;transition:.2s}.dot.on{width:18px;background:#111}.loading{display:grid;place-items:center;aspect-ratio:4/5;color:#666;font-size:13px;padding:30px;text-align:center}
 </style>
 </head>
 <body>
-<iframe id="designApp" src="../design_de_luxo_forum_mobile_final_v3.html" title="Design de luxo — Fórum de Interação" scrolling="no"></iframe>
+<div class="phone">
+<div class="notch"></div>
+<div class="status"><span>10:24</span><span>▮▮▮ ◌ ✦</span></div>
+<div class="top"><div class="profile"><div class="ring"><div class="avatar"><img id="avatarImg" alt="Imagem de perfil"></div></div><div class="name"><strong>Design de luxo</strong><span>Pesquisa • Interiores • Alto padrão</span></div></div><div class="menu">•••</div></div>
+<div class="wrap">
+<button class="arrow prev" id="prev" aria-label="Anterior">‹</button><button class="arrow next" id="next" aria-label="Próximo">›</button><div class="count" id="count">1/5</div>
+<a class="article" id="articleLink" href="https://ccsenet.org/journal/index.php/ijbm/article/view/0/52909" target="_blank" rel="noopener" aria-label="Abrir artigo científico"><img id="articleThumb" alt="Recorte do artigo"><span class="glass"></span></a>
+<div class="carousel" id="carousel"><div class="loading" id="loading">Carregando carrossel…</div></div>
+</div>
+<div class="actions"><div><button class="icon" id="heart" aria-label="Curtir">♡</button><button class="icon" aria-label="Comentar">◯</button><button class="icon" aria-label="Compartilhar">⌁</button></div><div><button class="icon" aria-label="Salvar">▢</button></div></div>
+<div class="feedback" id="feedback">Deslize o carrossel ou use as setinhas. Toque na lupa para abrir o artigo.</div><div class="dots" id="dots"></div>
+</div>
 <script>
-const ARTICLE='https://doi.org/10.5539/ijbm.v21n2p65';
-const frame=document.getElementById('designApp');
-frame.addEventListener('load',()=>{
-  try{
-    const d=frame.contentDocument;
-    const w=frame.contentWindow;
-    const caption=d.querySelector('.caption-area'); if(caption) caption.style.display='none';
-    const modal=d.querySelector('.modal'); if(modal) modal.style.display='none';
-    const phone=d.querySelector('.phone'); if(phone){phone.style.height='730px';phone.style.minHeight='730px'}
-    d.body.style.minHeight='0'; d.body.style.padding='18px'; d.body.style.alignItems='start';
-    const old=d.querySelector('.loupe-float');
-    if(old){
-      const fresh=old.cloneNode(true); old.replaceWith(fresh);
-      fresh.setAttribute('aria-label','Abrir artigo científico');
-      fresh.addEventListener('click',e=>{e.preventDefault();w.open(ARTICLE,'_blank','noopener')});
-    }
-    const feedback=d.getElementById('feedback');
-    if(feedback && !feedback.textContent.includes('lupa')) feedback.textContent='Use as setinhas ou deslize para ver o carrossel. Toque na lupa para abrir o artigo.';
-  }catch(e){console.error(e)}
-});
+const SOURCE='../design_de_luxo_forum_mobile_final_v3.html?v=20260915-3';
+const q=id=>document.getElementById(id),car=q('carousel'),dots=q('dots'),count=q('count'),thumb=q('articleThumb'),heart=q('heart'),feedback=q('feedback'),avatar=q('avatarImg');
+let slides=[],cur=0,on=false;
+function render(){if(!slides.length)return;count.textContent=`${cur+1}/${slides.length}`;thumb.src=slides[cur].crop;[...dots.children].forEach((d,i)=>d.classList.toggle('on',i===cur));q('prev').style.opacity=cur?1:.35;q('next').style.opacity=cur<slides.length-1?1:.35}
+function go(n){if(!slides.length)return;cur=Math.max(0,Math.min(slides.length-1,n));car.scrollTo({left:car.clientWidth*cur,behavior:'smooth'});render()}
+q('prev').onclick=()=>go(cur-1);q('next').onclick=()=>go(cur+1);
+heart.onclick=()=>{on=!on;heart.textContent=on?'♥':'♡';heart.classList.toggle('liked',on);feedback.textContent=on?'Curtido 💚 Agora compartilhe sua percepção no fórum.':'Deslize o carrossel ou use as setinhas. Toque na lupa para abrir o artigo.'};
+let tick=false;car.addEventListener('scroll',()=>{if(tick||!slides.length)return;tick=true;requestAnimationFrame(()=>{cur=Math.round(car.scrollLeft/(car.clientWidth||1));render();tick=false})},{passive:true});
+fetch(SOURCE,{cache:'no-store'}).then(r=>r.text()).then(src=>{
+  const marker='const slides = ';
+  const start=src.indexOf(marker);
+  const arrStart=src.indexOf('[',start);
+  const end=src.indexOf(';\nconst carousel',arrStart);
+  if(start<0||arrStart<0||end<0)throw new Error('slides não encontrados');
+  slides=JSON.parse(src.slice(arrStart,end));
+  const av=src.match(/<div class="avatar">\s*<img src="([^"]+)"/);
+  if(av)avatar.src=av[1]; else avatar.src=slides[0].image;
+  car.innerHTML=''; dots.innerHTML='';
+  slides.forEach((s,n)=>{const d=document.createElement('section');d.className='slide';d.innerHTML=`<img src="${s.image}" alt="Card ${n+1} do carrossel Design de luxo">`;car.appendChild(d);const x=document.createElement('span');x.className='dot'+(n?'':' on');x.onclick=()=>go(n);dots.appendChild(x)});
+  render();
+}).catch(err=>{q('loading').textContent='Não foi possível carregar o carrossel. Atualize a página.';console.error(err)});
 </script>
-</body>
-</html>
+</body></html>
